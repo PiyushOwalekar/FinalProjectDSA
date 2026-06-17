@@ -5,6 +5,23 @@ Cloud Object Storage Deduplication Engine
 ## 2.2 Problem Statement
 
 CloudVault is a large-scale cloud storage service that must detect and eliminate duplicate files to save storage costs. Existing problems:
+```markdown
+# 1.1 Project Title
+
+Cloud Object Storage Deduplication Engine
+
+## 1.2 Problem Statement
+
+CloudVault is a large-scale cloud storage service that must detect and eliminate duplicate files to save storage costs. Existing problems:
+- Slow prefix-based folder navigation when searching by folder name prefixes.
+- No reliable disk-state rollback when disk data is corrupted during writes.
+# 1.1 Project Title
+
+Cloud Object Storage Deduplication Engine
+
+## 1.2 Problem Statement
+
+CloudVault is a large-scale cloud storage service that must detect and eliminate duplicate files to save storage costs. Existing problems:
 - Slow prefix-based folder navigation when searching by folder name prefixes.
 - No reliable disk-state rollback when disk data is corrupted during writes.
 - Files awaiting integrity checks pile up without ordering.
@@ -13,7 +30,7 @@ CloudVault is a large-scale cloud storage service that must detect and eliminate
 
 This project implements a simplified deduplication engine in C++ that demonstrates fast prefix-based navigation, disk undo history, a verification queue, file fingerprinting for duplicate detection, space-based block sorting, a storage network map, minimal-cost path computation for file checks, and a simple load distributor.
 
-## 2.3 Objectives
+## 1.3 Objectives
 
 - Provide a folder directory supporting fast prefix-based search.
 - Maintain a disk undo history to revert to previous block states.
@@ -24,7 +41,7 @@ This project implements a simplified deduplication engine in C++ that demonstrat
 - Implement a load distributor that assigns deduplication tasks to the least busy server.
 - Provide clear execution steps, sample inputs/outputs, and analysis of complexity.
 
-## 2.4 System Overview / Architecture
+## 1.4 System Overview / Architecture
 
 This is a simplified, single-process C++ simulation of the major components:
 
@@ -44,7 +61,7 @@ This is a simplified, single-process C++ simulation of the major components:
 
 The components interact as follows: new files are inserted into the Folder Directory and pushed onto the Verification Line. The verifier computes file fingerprints and consults the fingerprint map to detect duplicates. Deduplication tasks are sorted by space-savings and distributed over the Storage Network using shortest paths and the Load Distributor.
 
-## 2.5 Data Structures and Algorithms Used
+## 1.5 Data Structures and Algorithms Used
 
 - std::map (ordered map): for folder directory and prefix-range operations.
 - std::unordered_map: for fingerprint -> file mapping (O(1) average lookups).
@@ -59,7 +76,7 @@ Justification:
 - Hash tables provide quick duplicate lookups by fingerprint.
 - Priority queues prioritize high-value work, improving overall storage savings.
 
-## 2.6 Implementation Approach
+## 1.6 Implementation Approach
 
 The provided `Finalproject.cpp` implements a simulation with the following modules:
 
@@ -77,7 +94,7 @@ Notes and assumptions:
 - The SHA-256 implementation uses a small public-domain implementation included or the OS crypto APIs where available.
 - The storage network is small and in-memory for demonstration.
 
-## 2.7 Time and Space Complexity Analysis
+## 1.7 Time and Space Complexity Analysis
 
 - Folder Directory (std::map) insertion: O(log n) per file. Prefix search: O(log n + k) where k is number of matching entries.
 - Fingerprint lookup (std::unordered_map): Average O(1) lookup and insert; worst-case O(n) with poor hashing.
@@ -92,7 +109,7 @@ Space complexity:
 - Disk undo log: O(c) for c commits retained.
 - Graph: O(V + E).
 
-## 2.8 Execution Steps
+## 1.8 Execution Steps
 
 Build and run the provided C++ program. Example commands (macOS, zsh):
 
@@ -112,7 +129,7 @@ g++ -std=c++17 -O2 -lssl -lcrypto -o Finalproject Finalproject.cpp
 
 The program runs a small simulation, prints verification steps, found duplicates, and the server assignments for deduplication tasks.
 
-## 2.9 Sample Inputs and Outputs
+## 1.9 Sample Inputs and Outputs
 
 Sample input scenario is embedded in the program (see `Finalproject.cpp`). Example output (truncated):
 
@@ -126,17 +143,7 @@ Sample input scenario is embedded in the program (see `Finalproject.cpp`). Examp
 - Shortest path from ServerA to ServerC: ServerA -> ServerB -> ServerC (cost 7)
 - Load assigned: TaskX -> Server2 (current load 3)
 
-## 2.10 Screenshots
-
-Place program screenshots in the `screenshots/` folder and reference them here. Example placeholders:
-
-- screenshots/verification_queue.png
-- screenshots/fingerprint_duplicates.png
-- screenshots/network_map.png
-
-(Images are not created automatically. Add screenshots by running the program and saving terminal or UI output.)
-
-## 2.11 Results and Observations
+## 1.10 Results and Observations
 
 - Prefix-based lookup using ordered maps provides acceptable performance for moderate directory sizes. For massive-scale systems, a trie or distributed index would be preferable.
 - SHA-256 fingerprinting lets the system detect exact duplicates very quickly with minimal false positives.
@@ -145,7 +152,7 @@ Place program screenshots in the `screenshots/` folder and reference them here. 
 - Modeling the storage network and computing minimal-cost paths helps reduce cross-server transfer costs during verification.
 - Simple load distribution to the least-busy server balances work but may be improved with task locality and bandwidth-awareness.
 
-## 2.12 Conclusion
+## 1.11 Conclusion
 
 This project demonstrates the core components of a deduplication engine suitable for cloud object storage: fast prefix navigation, undoable disk commits, verification queuing, cryptographic fingerprint-based duplicate detection, prioritized space-saving, network-aware minimal-cost path selection, and basic load distribution. The design choices trade simplicity for clarity; production systems (Google Drive, Dropbox) would add distributed indices, sharded fingerprint stores, robust consensus for commits, and network-aware schedulers.
 
