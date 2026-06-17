@@ -1,11 +1,3 @@
-# 2.1 Project Title
-
-Cloud Object Storage Deduplication Engine
-
-## 2.2 Problem Statement
-
-CloudVault is a large-scale cloud storage service that must detect and eliminate duplicate files to save storage costs. Existing problems:
-```markdown
 # 1.1 Project Title
 
 Cloud Object Storage Deduplication Engine
