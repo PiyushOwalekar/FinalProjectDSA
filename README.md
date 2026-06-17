@@ -7,15 +7,6 @@ Cloud Object Storage Deduplication Engine
 CloudVault is a large-scale cloud storage service that must detect and eliminate duplicate files to save storage costs. Existing problems:
 - Slow prefix-based folder navigation when searching by folder name prefixes.
 - No reliable disk-state rollback when disk data is corrupted during writes.
-# 1.1 Project Title
-
-Cloud Object Storage Deduplication Engine
-
-## 1.2 Problem Statement
-
-CloudVault is a large-scale cloud storage service that must detect and eliminate duplicate files to save storage costs. Existing problems:
-- Slow prefix-based folder navigation when searching by folder name prefixes.
-- No reliable disk-state rollback when disk data is corrupted during writes.
 - Files awaiting integrity checks pile up without ordering.
 - Detecting duplicates by content comparison is expensive without cryptographic fingerprints.
 - No map of how storage servers connect; cross-data-center transfers are slow and unpredictable.
